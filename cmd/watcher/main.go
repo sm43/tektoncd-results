@@ -22,6 +22,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"k8s.io/client-go/kubernetes"
 	"log"
 	"os"
 	"time"
@@ -70,12 +71,21 @@ func main() {
 	defer conn.Close()
 	results := v1alpha2pb.NewResultsClient(conn)
 
+	config := injection.ParseAndGetRESTConfigOrDie()
+
+	// Create kubernetes clientset
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		log.Fatalf("failed to create kubernetes client: %v", err)
+	}
+
 	cfg := &reconciler.Config{
+		KubeClient:                   clientset,
 		DisableAnnotationUpdate:      *disableCRDUpdate,
 		CompletedResourceGracePeriod: *completedRunGracePeriod,
 	}
 
-	sharedmain.MainWithContext(injection.WithNamespaceScope(ctx, ""), "watcher",
+	sharedmain.MainWithConfig(injection.WithNamespaceScope(ctx, ""), "watcher", config,
 		func(ctx context.Context, cmw configmap.Watcher) *controller.Impl {
 			return pipelinerun.NewControllerWithConfig(ctx, results, cfg)
 		}, func(ctx context.Context, cmw configmap.Watcher) *controller.Impl {
