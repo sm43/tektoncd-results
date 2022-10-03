@@ -10,5 +10,5 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "5"
 spec:
   pipelineRef:
-    name: demop
+    name: pipelined
     bundle: ttl.sh/demop@sha256:545109c1859f7b1d9db6593829307c86615ef9c0e73dde94d01cfd6bec658e81
