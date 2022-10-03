@@ -1,20 +1,20 @@
-# ---
-# apiVersion: tekton.dev/v1beta1
-# kind: PipelineRun
-# metadata:
-#   name: pac-2
-#   annotations:
-#   annotations:
-#     pipelinesascode.tekton.dev/on-event: "[pull_request]"
-#     # Use pipelines-svc-0.1-6e05d4d branch since we are using openshift-pipeline/tektoncd-results and not upstream
-#     pipelinesascode.tekton.dev/on-target-branch: "[pipelines-svc-0.1-6e05d4d]"
-#     pipelinesascode.tekton.dev/max-keep-runs: "5"
-# spec:
-#   pipelineSpec:
-#     tasks:
-#       - name: task
-#         taskSpec:
-#           steps:
-#             - name: task
-#               image: registry.access.redhat.com/ubi9/ubi-micro
-#               command: ["/bin/echo", "HELLOMOTO"]
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: pac-2
+  annotations:
+  annotations:
+    pipelinesascode.tekton.dev/on-event: "[pull_request]"
+    # Use pipelines-svc-0.1-6e05d4d branch since we are using openshift-pipeline/tektoncd-results and not upstream
+    pipelinesascode.tekton.dev/on-target-branch: "[pipelines-svc-0.1-6e05d4d]"
+    pipelinesascode.tekton.dev/max-keep-runs: "5"
+spec:
+  pipelineSpec:
+    tasks:
+      - name: task
+        taskSpec:
+          steps:
+            - name: task
+              image: registry.access.redhat.com/ubi9/ubi-micro
+              command: ["/bin/echo", "HELLOMOTO"]
