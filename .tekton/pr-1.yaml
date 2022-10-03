@@ -10,11 +10,6 @@ metadata:
     pipelinesascode.tekton.dev/on-target-branch: "[pipelines-svc-0.1-6e05d4d]"
     pipelinesascode.tekton.dev/max-keep-runs: "5"
 spec:
-  pipelineSpec:
-    tasks:
-      - name: task
-        taskSpec:
-          steps:
-            - name: task
-              image: registry.access.redhat.com/ubi9/ubi-micro
-              command: ["/bin/echo", "HELLOMOTO"]
+  pipelineRef:
+    name: demop
+    bundle: ttl.sh/demop@sha256:545109c1859f7b1d9db6593829307c86615ef9c0e73dde94d01cfd6bec658e81
